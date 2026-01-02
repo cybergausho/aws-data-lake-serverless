@@ -1,0 +1,15 @@
+DeploymentAccount: "111111111111"
+DeploymentRegion: "ca-central-1"
+
+Tags:
+  ParentOrg: "TestParentOrg"
+  Department: "TestDepartment"
+  App: "TestApp"
+  Version: "1.0.0"
+
+Environments:
+  TestEnvironment:
+    Name: "TestName"
+    Account: "222222222222"
+    Region: "ca-central-1"
+    TransitGatewayID: "tgw-00000000000000001"

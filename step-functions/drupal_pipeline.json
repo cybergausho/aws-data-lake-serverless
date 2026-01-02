@@ -1,0 +1,45 @@
+{
+  "Comment": "Data Pipeline secuencial: Staging to Consume",
+  "StartAt": "GlueRawToStaging",
+  "States": {
+    "GlueRawToStaging": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "${JOB_RAW_TO_STAGING}" 
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Glue.AWSGlueException",
+            "Glue.AmazonServiceException",
+            "States.TaskFailed"
+          ],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Next": "GlueStagingToConsumer"
+    },
+    "GlueStagingToConsumer": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "${JOB_STAGING_TO_CONSUME}"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Glue.AWSGlueException",
+            "Glue.AmazonServiceException"
+          ],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "End": true
+    }
+  }
+}

@@ -1,0 +1,34 @@
+DeploymentAccount: "20000000000"
+DeploymentRegion: "us-east-1"
+
+# Config de repo externo
+GitLabSettings:
+  Owner: "grupo-gitlab"
+  Repo: "financial-data-lake"
+  Branch: "main"
+  ConnectionArn: "arn:aws:codestar-connections:us-east-1:123456..." 
+# AWS -> Developer Tools (o ve directo a CodePipeline) -- Settings -> Connections
+# "Create connection" -> Provider: GitLab -> Connection Name: GitLab-Connection
+# Estado: "Available" -> Copiar el ARN de esa conexión...
+
+Tags:
+  ParentOrg: "lautaro"
+  Department: "gabriel"
+  App: "financial-data-lake"
+  Version: "1.0.0"
+  ProcessType: "ingest"
+  Project: "financial-data-lake"
+
+Environments:
+  Development:
+    Name: "Development"
+    Account: "20000000001"
+    Region: "us-east-1"
+    ProjectName: "financial-data-lake"
+
+  Production:
+    Name: "Production"
+    Account: "20000000002"
+    Region: "us-east-1"
+    ProjectName: "financial-data-lake"
+    ManualApprovalStep: "DeployToProd"

@@ -1,0 +1,17 @@
+RulesToSuppress:
+  - id: W12
+    reason: CDK construct does not support specifying this configuration.
+  - id: F19
+    reason: CDK construct does not support specifying this configuration.
+  - id: W35
+    reason: CDK construct does not support specifying this configuration.
+  - id: W76
+    reason: CDK construct does not support specifying this configuration.
+  - id : F76
+    reason: CDK construct does not support specifying this configuration.
+  - id : F3
+    reason : CDK construct does not support specifying this configuration.
+  - id : W11
+    reason : CDK construct does not support specifying this configuration.
+  - id : F38
+    reason : CDK construct does not support specifying this configuration.

@@ -1,17 +1,33 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as FinancialDataLake from '../lib/financial-data-lake-stack';
+import { Stack } from "aws-cdk-lib";
+import Name from "../helpers/names";
+import buildConfig from "./config-test/config-test";
+import PipelineStack from "../lib/pipeline-stack";
+import { Template } from "aws-cdk-lib/assertions";
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/financial-data-lake-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new FinancialDataLake.FinancialDataLakeStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+describe("Standard PipeLine", () => {
+  test("Creates a Standard PipeLine", () => {
+    const app = new Stack();
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+    const name = new Name({
+      parentOrg: buildConfig.Tags.ParentOrg,
+      department: buildConfig.Tags.Department,
+      app: buildConfig.Tags.App,
+      environment: buildConfig.Tags.Environment,
+      processType: buildConfig.Tags.ProcessType,
+      project: buildConfig.Tags.Project,
+    });
+
+    const cdkPipelineStack = new PipelineStack(app, "AppStack", {
+      env: {
+        account: buildConfig.DeploymentAccount,
+        region: buildConfig.DeploymentRegion,
+      },
+      buildConfig,
+      name,
+    });
+
+    const template = Template.fromStack(cdkPipelineStack);
+
+    expect(template.toJSON()).toMatchSnapshot("AppStack");
+  });
 });
